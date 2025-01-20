@@ -8,15 +8,15 @@ async function fetchUserData() {
     const users = await response.json()
     dataContainer.innerHTML = ''
     const userList = document.createElement("ul")
-    users.forEach((user)=> {
+    users.forEach(function(user){
        const li = document.createElement("li")
        li.textContent = user.name;
-       
        userList.append(li)
     })
     dataContainer.append(userList)
 
     }catch(error){
+        dataContainer.innerHTML = ''
         dataContainer.innerHTML = 'Failed to load user data.'
         console.error(error)
     }
