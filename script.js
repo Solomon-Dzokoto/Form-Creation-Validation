@@ -1,42 +1,39 @@
-// Define the async function to fetch and display user data
-async function fetchUserData() {
-   // API URL
-   const apiUrl = 'https://jsonplaceholder.typicode.com/users';
+document.addEventListener("DOMContentLoaded",function (){
+const form = document.getElementById('registration-form')
+const feedbackDiv = document.getElementById('form-feedback')
 
-   // Select the data container
-   const dataContainer = document.getElementById('api-data');
+console.log(form)
+form.addEventListener("submit",function (e){
+   e.preventDefault();
+   const username = document.getElementById('username').value.trim()
+   const email = document.getElementById('email').value.trim()
+   const password = document.getElementById('password').value.trim()
+   
+   let isValid = true
+   const messages = []
 
-   try {
-       // Fetch the user data from the API
-       const response = await fetch(apiUrl);
-
-       // Check if the response is OK (status code 200-299)
-       if (!response.ok) {
-           throw new Error("Failed to fetch user data");
-       }
-
-       // Parse the response as JSON
-       const users = await response.json();
-
-       // Clear the loading message
-       dataContainer.innerHTML = '';
-
-       // Create and append the user list
-       const userList = document.createElement('ul');
-       users.forEach(function (user) {
-           const li = document.createElement('li');
-           li.textContent = user.name; // Set the text content to the user's name
-           userList.append(li); // Append <li> to <ul>
-       });
-
-       dataContainer.append(userList); // Append <ul> to the container
-   } catch (error) {
-       // Handle errors by showing a failure message
-       dataContainer.innerHTML = ''; // Clear existing content
-       dataContainer.textContent = 'Failed to load user data.'; // Error message
-       console.error(error); // Log the error for debugging
+   if (username.length < 3){
+    isValid = false
+    messages.push("Your username must be more than 3 letters")
    }
-}
+   if (!email.includes("@") || !email.includes(".") ){
+    isValid = false
+    messages.push("Your email must include @ and .")
+   }
+   if (password.length < 8 ){
+    isValid = false
+    messages.push("Password must be more than 7 words or digits")
+   }
 
-// Invoke fetchUserData on DOMContentLoaded
-document.addEventListener('DOMContentLoaded', fetchUserData);
+   feedbackDiv.style.display = "block"
+
+   if(isValid){
+    feedbackDiv.textContent = "Registration successful!"
+    feedbackDiv.style.color = "#28a745"
+   }else{
+   feedbackDiv.innerHTML =  messages.join("<br>")
+    feedbackDiv.style.color = "#dc3545"
+   }
+})
+})
+
