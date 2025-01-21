@@ -12,9 +12,9 @@ async function fetchUserData() {
       li = document.createElement("li")
       li.textContent = user.name
 
-       userList.append( li )
+       userList.appendChild( li )
     })
-    dataContainer.append(userList)
+    dataContainer.appendChild(userList)
     }catch(error){
         dataContainer.innerHTML = ''
         dataContainer.innerHTML = 'Failed to load user data.'
